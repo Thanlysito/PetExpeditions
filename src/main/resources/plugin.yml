@@ -1,0 +1,21 @@
+name: PetExpeditions
+version: '${version}'
+main: dev.thanly.expeditions.PetExpeditions
+api-version: '1.21'
+author: Thanly
+description: Send your tamed pets on timed expeditions to bring back loot. Pets level up and have synergies.
+
+commands:
+  expeditions:
+    description: Open the expeditions board.
+    usage: /expeditions [pets|claim|help|reload]
+    aliases: [expedition, pexp, expediciones]
+    permission: petexpeditions.use
+
+permissions:
+  petexpeditions.use:
+    description: Register pets and send them on expeditions.
+    default: true
+  petexpeditions.admin:
+    description: Reload the plugin.
+    default: op

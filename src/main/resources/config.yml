@@ -1,0 +1,264 @@
+# ==========================================================
+#  PetExpeditions - by Thanly
+#  Texts use MiniMessage: https://docs.advntr.dev/minimessage/format.html
+#  After editing, use /expeditions reload
+# ==========================================================
+
+# Language file from plugins/PetExpeditions/lang/ (en, es)
+language: en
+
+# Pet types players can register (Shift + right-click with an empty hand)
+pet-types: [WOLF, CAT, PARROT]
+
+# Max pets a player can register
+max-pets: 12
+
+# Expeditions a player can run at the same time.
+# Give more with the permission petexpeditions.slots.<number> (example: petexpeditions.slots.4)
+max-active-expeditions: 2
+
+leveling:
+  max-level: 10
+  # XP needed to go from level N to N+1 = xp-per-level * N
+  xp-per-level: 100
+  # Extra success chance (%) for every level above 1
+  success-bonus-per-level: 2.0
+
+# Synergy: when the pet type matches the expedition's "synergy"
+synergy:
+  success-bonus: 15.0      # extra success chance (%)
+  loot-multiplier: 1.5     # item amounts x1.5
+
+# XP a pet still gets when the expedition fails (% of the normal XP)
+fail-xp-percent: 25
+
+sounds: true
+
+# TEST MODE: every "minute" lasts 1 second, to try expeditions quickly.
+# Keep it false on a real server!
+test-mode: false
+
+# ----------------------------------------------------------
+#  Rarities of custom pets: text color and extra success chance (%)
+# ----------------------------------------------------------
+rarities:
+  COMMON:
+    color: "<white>"
+    success-bonus: 0
+  RARE:
+    color: "<aqua>"
+    success-bonus: 5
+  EPIC:
+    color: "<light_purple>"
+    success-bonus: 10
+  LEGENDARY:
+    color: "<gold>"
+    success-bonus: 15
+
+# ----------------------------------------------------------
+#  Custom pets: pets that don't exist in vanilla Minecraft.
+#  Players get them as an EGG (expedition loot, or /expeditions give).
+#  Right-click the egg to hatch it. In "My pets", Shift + click turns it
+#  back into an egg (keeps its level), so eggs can be traded.
+#  icon: any item. To use a custom head, set icon: PLAYER_HEAD and
+#        texture: the "Value" from minecraft-heads.com (or just the texture id)
+# ----------------------------------------------------------
+custom-pets:
+  slime_buddy:
+    name: "Slime Buddy"
+    rarity: COMMON
+    icon: SLIME_BALL
+    description:
+      - "<gray>Bouncy and always happy."
+  crystal_golem:
+    name: "Crystal Golem"
+    rarity: RARE
+    icon: AMETHYST_SHARD
+    description:
+      - "<gray>Born inside a geode. Loves caves."
+  phoenix:
+    name: "Phoenix"
+    rarity: EPIC
+    icon: FIRE_CHARGE
+    description:
+      - "<gray>Never afraid of fire."
+  baby_dragon:
+    name: "Baby Dragon"
+    rarity: LEGENDARY
+    icon: DRAGON_HEAD
+    description:
+      - "<gray>Small now... but not for long."
+
+# ----------------------------------------------------------
+#  Expeditions
+#  icon / item: Minecraft item names (https://jd.papermc.io/paper/1.21.1/org/bukkit/Material.html)
+#  synergy: WOLF, CAT, PARROT, a custom pet id, a list like [WOLF, phoenix], or NONE
+#  rewards: each line is rolled on its own with its chance (%)
+#     - item: IRON_INGOT
+#       amount: 1-4          (or a fixed number)
+#       chance: 70
+#     - command: "eco give {player} 100"     (runs from the console)
+#       display: "<gold>100 coins"
+#       chance: 20
+#     - pet: phoenix                          (an egg of a custom pet)
+#       chance: 1
+# ----------------------------------------------------------
+expeditions:
+  forest:
+    name: "<green>Nearby Forest"
+    icon: OAK_SAPLING
+    description:
+      - "<gray>A short walk among the trees."
+      - "<gray>Good for young pets."
+    duration-minutes: 10
+    required-level: 1
+    synergy: WOLF
+    success-chance: 90
+    pet-xp: 20
+    rewards:
+      - item: OAK_LOG
+        amount: 4-12
+        chance: 100
+      - item: APPLE
+        amount: 1-3
+        chance: 50
+      - item: BONE
+        amount: 1-4
+        chance: 40
+      - pet: slime_buddy
+        chance: 4
+
+  river:
+    name: "<aqua>River Bank"
+    icon: FISHING_ROD
+    description:
+      - "<gray>Your pet goes fishing... sort of."
+    duration-minutes: 20
+    required-level: 1
+    synergy: CAT
+    success-chance: 85
+    pet-xp: 30
+    rewards:
+      - item: COD
+        amount: 2-6
+        chance: 100
+      - item: SALMON
+        amount: 1-4
+        chance: 60
+      - item: STRING
+        amount: 1-3
+        chance: 40
+      - item: NAME_TAG
+        amount: 1
+        chance: 3
+
+  cave:
+    name: "<gray>Deep Cave"
+    icon: IRON_PICKAXE
+    description:
+      - "<gray>Dark tunnels full of ores."
+      - "<red>Dangerous for weak pets."
+    duration-minutes: 45
+    required-level: 3
+    synergy: [WOLF, crystal_golem]
+    success-chance: 70
+    pet-xp: 60
+    rewards:
+      - item: COAL
+        amount: 4-10
+        chance: 100
+      - item: IRON_INGOT
+        amount: 1-4
+        chance: 70
+      - item: GOLD_INGOT
+        amount: 1-2
+        chance: 30
+      - item: DIAMOND
+        amount: 1
+        chance: 5
+      - pet: crystal_golem
+        chance: 3
+
+  jungle:
+    name: "<dark_green>Jungle Canopy"
+    icon: JUNGLE_LEAVES
+    description:
+      - "<gray>Only good flyers find what hides up there."
+    duration-minutes: 60
+    required-level: 3
+    synergy: PARROT
+    success-chance: 70
+    pet-xp: 70
+    rewards:
+      - item: COCOA_BEANS
+        amount: 2-6
+        chance: 100
+      - item: MELON_SLICE
+        amount: 3-8
+        chance: 70
+      - item: EMERALD
+        amount: 1-2
+        chance: 25
+      - pet: slime_buddy
+        chance: 5
+
+  ruins:
+    name: "<gold>Forgotten Ruins"
+    icon: CHISELED_STONE_BRICKS
+    description:
+      - "<gray>Ancient ruins nobody came back from..."
+      - "<gray>...except the best explorers."
+    duration-minutes: 180
+    required-level: 6
+    synergy: CAT
+    success-chance: 55
+    pet-xp: 150
+    rewards:
+      - item: GOLD_INGOT
+        amount: 2-5
+        chance: 80
+      - item: EMERALD
+        amount: 1-4
+        chance: 50
+      - item: DIAMOND
+        amount: 1-2
+        chance: 25
+      - item: NAME_TAG
+        amount: 1
+        chance: 20
+      - item: ENCHANTED_GOLDEN_APPLE
+        amount: 1
+        chance: 2
+      - pet: phoenix
+        chance: 3
+      - pet: baby_dragon
+        chance: 1
+
+  volcano:
+    name: "<red>Volcano Heart"
+    icon: MAGMA_BLOCK
+    description:
+      - "<gray>Only creatures born from fire"
+      - "<gray>can walk here safely."
+    duration-minutes: 240
+    required-level: 5
+    synergy: [phoenix, baby_dragon]
+    success-chance: 45
+    pet-xp: 200
+    rewards:
+      - item: MAGMA_CREAM
+        amount: 2-6
+        chance: 100
+      - item: BLAZE_ROD
+        amount: 1-3
+        chance: 60
+      - item: GOLD_BLOCK
+        amount: 1
+        chance: 15
+      - item: NETHERITE_SCRAP
+        amount: 1
+        chance: 4
+      - pet: phoenix
+        chance: 4
+      - pet: baby_dragon
+        chance: 2
